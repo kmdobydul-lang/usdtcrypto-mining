@@ -1,276 +1,279 @@
-// Demo frontend logic (no backend). Persists to localStorage.
-
-// Constants
-const CONVERT_RATE = 0.01; // 1 WLFI = 0.01 USDT
-const MIN_WITHDRAW = 2; // USDT
-const MINING_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
-const RECHARGE_BNB_ADDRESS = '0x53f90e7a0d2834b772890f4f456d51aaed61de43';
-
-// State helpers
-function getState(key, defaultVal) {
-  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : defaultVal; }
-  catch(e){ return defaultVal; }
-}
-function setState(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
-
-// Initial state defaults
-let state = {
-  wlfi: getState('wlfi', 214.00),   // give starting coins
-  usdt: getState('usdt', 0.00),
-  teamCount: getState('teamCount', 2),
-  miningEnd: getState('miningEnd', null), // timestamp when mining ends
-  miningActive: getState('miningActive', false)
-};
-
-// UI elements
-const pages = {
-  mine: document.getElementById('page-mine'),
-  team: document.getElementById('page-team'),
-  me: document.getElementById('page-me')
-};
-const navBtns = Array.from(document.querySelectorAll('.nav-btn'));
-const wlfiAmountEl = document.getElementById('wlfiAmount');
-const meWLFIEl = document.getElementById('meWLFI');
-const meUSDTE = document.getElementById('meUSDT');
-const progressInner = document.getElementById('progressInner');
-const progressTimer = document.getElementById('progressTimer');
-const mineActionBtn = document.getElementById('mineActionBtn');
-const mineStatus = document.getElementById('mineStatus');
-const mineMessage = document.getElementById('mineMessage');
-
-const copyRefBtn = document.getElementById('copyRefBtn');
-const refLinkEl = document.getElementById('refLink');
-const teamCountEl = document.getElementById('teamCount');
-
-const openConvert = document.getElementById('openConvert');
-const modalConvert = document.getElementById('modalConvert');
-const convertInput = document.getElementById('convertInput');
-const convertDo = document.getElementById('convertDo');
-const convertResult = document.getElementById('convertResult');
-const closeConvert = document.getElementById('closeConvert');
-
-const openRecharge = document.getElementById('openRecharge');
-const modalRecharge = document.getElementById('modalRecharge');
-const rechargeSelect = document.getElementById('rechargeSelect');
-const rechargeInfo = document.getElementById('rechargeInfo');
-const closeRecharge = document.getElementById('closeRecharge');
-
-const openWithdraw = document.getElementById('openWithdraw');
-const modalWithdraw = document.getElementById('modalWithdraw');
-const withdrawMethod = document.getElementById('withdrawMethod');
-const binanceInput = document.getElementById('binanceInput');
-const bitgetInput = document.getElementById('bitgetInput');
-const withdrawAmount = document.getElementById('withdrawAmount');
-const submitWithdraw = document.getElementById('submitWithdraw');
-const withdrawMsg = document.getElementById('withdrawMsg');
-const closeWithdraw = document.getElementById('closeWithdraw');
-
-const fakeInviteBtn = document.getElementById('fakeInviteBtn');
-
-// navigation
-navBtns.forEach(btn=>{
-  btn.addEventListener('click', ()=> {
-    navBtns.forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const target = btn.dataset.target;
-    Object.values(pages).forEach(p=>p.classList.remove('active'));
-    document.getElementById(target).classList.add('active');
-  });
-});
-
-// render UI from state
-function renderAll(){
-  wlfiAmountEl.innerText = parseFloat(state.wlfi).toFixed(2);
-  meWLFIEl.innerText = parseFloat(state.wlfi).toFixed(2);
-  meUSDTE.innerText = parseFloat(state.usdt).toFixed(2);
-  teamCountEl.innerText = state.teamCount;
-  updateMiningUI();
-  setState('wlfi', state.wlfi);
-  setState('usdt', state.usdt);
-  setState('teamCount', state.teamCount);
-}
-
-// Mining logic
-let miningInterval = null;
-function updateMiningUI(){
-  if(state.miningActive && state.miningEnd){
-    const remaining = state.miningEnd - Date.now();
-    if(remaining <= 0){
-      // mining finished
-      progressInner.style.width = '100%';
-      progressTimer.innerText = 'Mining complete — ready to claim';
-      mineActionBtn.innerText = 'Collect Reward (5 WLFI)';
-      mineActionBtn.disabled = false;
-      mineStatus.innerText = 'Completed';
-      mineActionBtn.onclick = collectReward;
-    } else {
-      // still mining
-      const pct = Math.max(0, Math.min(100, ((MINING_DURATION_MS - remaining)/MINING_DURATION_MS)*100));
-      progressInner.style.width = pct + '%';
-      const hrs = Math.floor(remaining / (1000*60*60));
-      const mins = Math.floor((remaining % (1000*60*60)) / (1000*60));
-      const secs = Math.floor((remaining % (1000*60)) / 1000);
-      progressTimer.innerText = `Time left: ${hrs}h ${mins}m ${secs}s`;
-      mineActionBtn.innerText = 'Mining in progress...';
-      mineActionBtn.disabled = true;
-      mineStatus.innerText = 'Mining';
-      // update interval if not set
-      if(!miningInterval){
-        miningInterval = setInterval(()=> {
-          updateMiningUI();
-        },1000);
-      }
+// Smart Demo Website - Complete JavaScript
+class SmartDemoSystem {
+    constructor() {
+        this.invites = JSON.parse(localStorage.getItem('demoInvites')) || [];
+        this.highlightColor = '#ffff99';
+        this.updateInviteDisplay();
+        this.logToConsole('🚀 Smart Demo System Initialized');
+        this.logToConsole('💡 Type commands or use control buttons');
     }
-  } else {
-    // not started
-    progressInner.style.width = '0%';
-    progressTimer.innerText = 'Not started';
-    mineActionBtn.innerText = 'Start Mining';
-    mineActionBtn.disabled = false;
-    mineStatus.innerText = 'Not started';
-    if(miningInterval){ clearInterval(miningInterval); miningInterval = null; }
-    mineActionBtn.onclick = startMining;
-  }
+
+    // Smart Highlight System
+    highlightElement(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.classList.add('highlight-active');
+            setTimeout(() => {
+                element.classList.remove('highlight-active');
+            }, 2000);
+        }
+    }
+
+    highlightAllSections() {
+        this.logToConsole('✨ Starting Smart Highlight Demo...');
+        const sections = document.querySelectorAll('.section');
+        
+        sections.forEach((section, index) => {
+            setTimeout(() => {
+                section.classList.add('highlight-active');
+                this.logToConsole(`🔦 Highlighting: ${section.id || 'Unknown Section'}`);
+                
+                setTimeout(() => {
+                    section.classList.remove('highlight-active');
+                }, 2000);
+            }, index * 800);
+        });
+        
+        this.logToConsole('✅ All sections highlighted successfully!');
+    }
+
+    // Invitation System
+    generateInviteCode() {
+        return Math.random().toString(36).substring(2, 8).toUpperCase();
+    }
+
+    createInvite(email, role = 'member') {
+        const newInvite = {
+            id: Date.now(),
+            email: email,
+            role: role,
+            inviteCode: this.generateInviteCode(),
+            status: 'pending',
+            createdAt: new Date().toLocaleString(),
+            expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleString()
+        };
+        
+        this.invites.push(newInvite);
+        this.saveToLocalStorage();
+        this.updateInviteDisplay();
+        
+        this.logToConsole(`📧 New invitation created for: ${email}`);
+        this.logToConsole(`🔑 Invite Code: ${newInvite.inviteCode} | Role: ${role}`);
+        
+        return newInvite;
+    }
+
+    sendInvite(email = 'demo@example.com', role = 'member') {
+        this.logToConsole(`📤 Sending invitation to: ${email}`);
+        
+        // Simulate API call delay
+        setTimeout(() => {
+            const invite = this.createInvite(email, role);
+            this.logToConsole(`✅ Invitation sent successfully!`);
+            this.logToConsole(`📋 Code: ${invite.inviteCode} | Status: ${invite.status}`);
+            
+            // Highlight invitation section
+            this.highlightElement('invitation-system');
+        }, 1000);
+    }
+
+    acceptInvite(inviteCode = null, userName = 'Demo User') {
+        if (!inviteCode) {
+            inviteCode = prompt('Enter invitation code:') || 'DEMO123';
+        }
+        
+        this.logToConsole(`🔍 Searching for invite code: ${inviteCode}`);
+        
+        const invite = this.invites.find(inv => inv.inviteCode === inviteCode);
+        
+        if (invite) {
+            invite.status = 'accepted';
+            invite.acceptedBy = userName;
+            invite.acceptedAt = new Date().toLocaleString();
+            
+            this.saveToLocalStorage();
+            this.updateInviteDisplay();
+            
+            this.logToConsole(`🎉 Welcome ${userName}! Invitation accepted successfully!`);
+            this.highlightElement('invitation-system');
+        } else {
+            this.logToConsole(`❌ Invalid invitation code: ${inviteCode}`, 'error');
+        }
+    }
+
+    showAllInvites() {
+        this.logToConsole('📊 === ALL INVITATIONS ===');
+        
+        if (this.invites.length === 0) {
+            this.logToConsole('No invitations found. Send some invites first!');
+            return;
+        }
+        
+        this.invites.forEach(invite => {
+            this.logToConsole(
+                `📨 ${invite.email} | Code: ${invite.inviteCode} | ` +
+                `Role: ${invite.role} | Status: ${invite.status}`
+            );
+        });
+        
+        this.highlightElement('invitation-system');
+    }
+
+    // Utility Methods
+    updateInviteDisplay() {
+        const inviteCount = document.getElementById('inviteCount');
+        const inviteList = document.getElementById('inviteList');
+        
+        if (inviteCount) inviteCount.textContent = this.invites.length;
+        
+        if (inviteList) {
+            inviteList.innerHTML = this.invites
+                .map(invite => `
+                    <div class="invite-item">
+                        <strong>${invite.email}</strong> 
+                        | Code: ${invite.inviteCode}
+                        | Role: ${invite.role}
+                        | Status: <span style="color: ${invite.status === 'accepted' ? 'green' : 'orange'}">
+                            ${invite.status}
+                        </span>
+                    </div>
+                `)
+                .join('');
+        }
+    }
+
+    saveToLocalStorage() {
+        localStorage.setItem('demoInvites', JSON.stringify(this.invites));
+    }
+
+    logToConsole(message, type = 'info') {
+        const consoleOutput = document.getElementById('console-output');
+        if (consoleOutput) {
+            const line = document.createElement('div');
+            line.className = 'console-line';
+            line.style.color = type === 'error' ? '#ff4444' : '#00ff00';
+            line.textContent = `> ${message}`;
+            consoleOutput.appendChild(line);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+        
+        // Also log to browser console
+        console.log(`[SmartDemo] ${message}`);
+    }
+
+    resetDemo() {
+        if (confirm('Are you sure you want to reset the demo? All invites will be deleted.')) {
+            this.invites = [];
+            this.saveToLocalStorage();
+            this.updateInviteDisplay();
+            this.logToConsole('🔄 Demo reset successfully! All data cleared.');
+        }
+    }
+
+    smartDemo() {
+        this.logToConsole('🤖 Starting Smart Auto-Demo...');
+        
+        // Sequence of automated demo actions
+        setTimeout(() => this.highlightAllSections(), 1000);
+        setTimeout(() => this.sendInvite('user1@demo.com', 'member'), 3000);
+        setTimeout(() => this.sendInvite('admin@demo.com', 'admin'), 5000);
+        setTimeout(() => this.acceptInvite(this.invites[0]?.inviteCode, 'John Doe'), 7000);
+        setTimeout(() => this.showAllInvites(), 9000);
+        
+        this.logToConsole('✅ Smart Demo sequence started! Watch the magic happen...');
+    }
 }
 
-function startMining(){
-  state.miningActive = true;
-  state.miningEnd = Date.now() + MINING_DURATION_MS;
-  setState('miningActive', true);
-  setState('miningEnd', state.miningEnd);
-  mineMessage.innerText = 'Mining started — come back after 24 hours to collect 5 WLFI (demo).';
-  renderAll();
+// Initialize the system
+const demoSystem = new SmartDemoSystem();
+
+// Global functions for HTML buttons
+function sendInvite() {
+    demoSystem.sendInvite();
 }
 
-function collectReward(){
-  // add 5 WLFI
-  state.wlfi = parseFloat(state.wlfi) + 5;
-  state.miningActive = false;
-  state.miningEnd = null;
-  setState('miningActive', false);
-  setState('miningEnd', null);
-  mineMessage.innerText = '✅ You collected 5 WLFI!';
-  renderAll();
+function acceptInvite() {
+    demoSystem.acceptInvite();
 }
 
-// Convert logic
-openConvert.addEventListener('click', ()=>modalConvert.classList.remove('hidden'));
-closeConvert.addEventListener('click', ()=>modalConvert.classList.add('hidden'));
-convertDo.addEventListener('click', ()=>{
-  const v = parseFloat(convertInput.value || 0);
-  if(!v || v <= 0){ alert('Enter WLFI amount'); return; }
-  if(v > state.wlfi){ alert('Not enough WLFI'); return; }
-  const converted = v * CONVERT_RATE;
-  state.wlfi = parseFloat(state.wlfi) - v;
-  state.usdt = parseFloat(state.usdt) + converted;
-  setState('wlfi', state.wlfi); setState('usdt', state.usdt);
-  convertResult.innerText = `Converted ${v} WLFI → ${converted.toFixed(2)} USDT`;
-  renderAll();
-});
-
-// Recharge modal
-openRecharge.addEventListener('click', ()=>{ modalRecharge.classList.remove('hidden'); updateRechargeInfo(); });
-closeRecharge.addEventListener('click', ()=>modalRecharge.classList.add('hidden'));
-rechargeSelect.addEventListener('change', updateRechargeInfo);
-function updateRechargeInfo(){
-  const v = rechargeSelect.value;
-  if(v === 'USDT'){
-    rechargeInfo.innerHTML = `<div>Deposit USDT (ERC20 / TRC20). Use your user-id as memo (demo only).</div>`;
-  } else {
-    rechargeInfo.innerHTML = `<div>Deposit BNB (BEP20) to address:<br><code style="color:#9ee9b8">${RECHARGE_BNB_ADDRESS}</code></div>`;
-  }
+function highlightAll() {
+    demoSystem.highlightAllSections();
 }
 
-// Withdraw modal
-openWithdraw.addEventListener('click', ()=>{ modalWithdraw.classList.remove('hidden'); });
-closeWithdraw.addEventListener('click', ()=>modalWithdraw.classList.add('hidden'));
-withdrawMethod.addEventListener('change', ()=>{
-  const v = withdrawMethod.value;
-  if(v === 'binance'){ binanceInput.classList.remove('hidden'); bitgetInput.classList.add('hidden'); }
-  else { bitgetInput.classList.remove('hidden'); binanceInput.classList.add('hidden'); }
+function showAllInvites() {
+    demoSystem.showAllInvites();
+}
+
+function resetDemo() {
+    demoSystem.resetDemo();
+}
+
+function smartDemo() {
+    demoSystem.smartDemo();
+}
+
+function customInvite() {
+    const email = document.getElementById('emailInput').value || 'demo@example.com';
+    const role = document.getElementById('roleSelect').value;
+    demoSystem.sendInvite(email, role);
+}
+
+function executeCommand() {
+    const commandInput = document.getElementById('command-input');
+    const command = commandInput.value.trim();
+    
+    if (!command) return;
+    
+    demoSystem.logToConsole(`💻 Executing: ${command}`);
+    commandInput.value = '';
+    
+    // Simple command parser
+    try {
+        if (command === 'highlightAll()') {
+            highlightAll();
+        } else if (command === 'sendInvite()') {
+            sendInvite();
+        } else if (command === 'acceptInvite()') {
+            acceptInvite();
+        } else if (command === 'showAllInvites()') {
+            showAllInvites();
+        } else if (command === 'resetDemo()') {
+            resetDemo();
+        } else if (command === 'smartDemo()') {
+            smartDemo();
+        } else if (command.startsWith('sendInvite(')) {
+            const match = command.match(/sendInvite\(\s*["']([^"']+)["']\s*,\s*["']([^"']+)["']\s*\)/);
+            if (match) {
+                demoSystem.sendInvite(match[1], match[2]);
+            } else {
+                demoSystem.logToConsole('❌ Invalid syntax. Use: sendInvite("email", "role")', 'error');
+            }
+        } else {
+            demoSystem.logToConsole(`❌ Unknown command: ${command}`, 'error');
+            demoSystem.logToConsole('💡 Available commands: highlightAll(), sendInvite(), acceptInvite(), showAllInvites(), resetDemo(), smartDemo()');
+        }
+    } catch (error) {
+        demoSystem.logToConsole(`❌ Error executing command: ${error.message}`, 'error');
+    }
+}
+
+// Add Enter key support for command input
+document.getElementById('command-input')?.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        executeCommand();
+    }
 });
-submitWithdraw.addEventListener('click', ()=>{
-  const amount = parseFloat(withdrawAmount.value || 0);
-  if(isNaN(amount) || amount <= 0){ alert('Enter withdraw amount'); return; }
-  if(amount < MIN_WITHDRAW){ alert('Minimum withdraw is ' + MIN_WITHDRAW + ' USDT'); return; }
-  if(amount > state.usdt){ alert('Not enough USDT balance'); return; }
-  const method = withdrawMethod.value;
-  if(method === 'binance' && !binanceInput.value.trim()){ alert('Enter Binance UID'); return; }
-  if(method === 'bitget' && !bitgetInput.value.trim()){ alert('Enter Bitget UID'); return; }
-  // simulate withdraw
-  state.usdt = parseFloat(state.usdt) - amount;
-  setState('usdt', state.usdt);
-  withdrawMsg.innerText = `Withdraw request submitted (demo). Method: ${method.toUpperCase()}, Amount: ${amount.toFixed(2)} USDT`;
-  renderAll();
+
+// Add click handlers for feature cards
+document.querySelectorAll('.feature-card').forEach(card => {
+    card.addEventListener('click', function() {
+        const section = this.getAttribute('data-section');
+        demoSystem.logToConsole(`🔍 Clicked on feature: ${section}`);
+        demoSystem.highlightElement('features');
+    });
 });
 
-// Copy referral
-copyRefBtn.addEventListener('click', ()=>{
-  const val = refLinkEl.value;
-  navigator.clipboard && navigator.clipboard.writeText(val);
-  alert('Referral link copied (demo).');
-});
-
-// Fake invite to demo team
-fakeInviteBtn.addEventListener('click', ()=>{
-  state.teamCount = parseInt(state.teamCount) + 1;
-  setState('teamCount', state.teamCount);
-  renderAll();
-});
-
-// Page startup: restore mining state if present
-(function init(){
-  // restore mining info from localStorage
-  const miningActive = getState('miningActive', false);
-  const miningEnd = getState('miningEnd', null);
-  if(miningActive && miningEnd){
-    state.miningActive = true;
-    state.miningEnd = miningEnd;
-  } else {
-    state.miningActive = false;
-    state.miningEnd = null;
-    setState('miningActive', false);
-    setState('miningEnd', null);
-  }
-  // ensure UI elements exist
-  renderAll();
-})();
-
-// --- Task & Ads modal logic (append to end of script.js) ---
-const taskBtn = document.getElementById("taskBtn");
-const adsBtn = document.getElementById("adsBtn");
-const taskModal = document.getElementById("taskModal");
-const adsModal = document.getElementById("adsModal");
-const closeTask = document.getElementById("closeTask");
-const closeAds = document.getElementById("closeAds");
-const claimTaskBtn = document.getElementById("claimTaskBtn");
-const balanceText = document.getElementById("balance");
-
-// ensure balance element exists
-if (!balanceText) {
-  console.warn('balance element not found (id="balance")');
-} 
-
-let balance = parseFloat(balanceText ? balanceText.innerText : 0) || 0;
-
-if (taskBtn) taskBtn.onclick = () => taskModal.style.display = "flex";
-if (adsBtn) adsBtn.onclick = () => adsModal.style.display = "flex";
-if (closeTask) closeTask.onclick = () => taskModal.style.display = "none";
-if (closeAds) closeAds.onclick = () => adsModal.style.display = "none";
-
-if (claimTaskBtn) claimTaskBtn.onclick = () => {
-  balance += 10;
-  if (balanceText) balanceText.innerText = balance.toFixed(2);
-  alert("✅ You earned 10 WLFI!");
-  taskModal.style.display = "none";
-};
-
-// close modal on outside click
-window.onclick = (e) => {
-  if (e.target === taskModal) taskModal.style.display = "none";
-  if (e.target === adsModal) adsModal.style.display = "none";
-};
-// wrap to run after DOM ready
-document.addEventListener('DOMContentLoaded', function(){
-  // paste the task modal JS here (the block above)
-});
+// Initial demo message
+setTimeout(() => {
+    demoSystem.logToConsole('🎯 Try the "Smart Demo" button for automated showcase!');
+}, 2000);
