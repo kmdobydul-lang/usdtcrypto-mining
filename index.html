@@ -3,39 +3,57 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>WLFI Live Mining</title>
+  <title>WLFI Live Mining - Demo</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Header -->
   <header>
-    <img src="logo.png" alt="WLFI Logo" width="50" />
     <h1>WLFI Live Mining</h1>
-    <div>
-      <a href="https://t.me/free_ton74" target="_blank">Telegram</a> · 
-      <span>@ShantoTune (YouTube)</span>
-    </div>
+    <div><a href="https://t.me/free_ton74" target="_blank">Telegram</a> · <span>@ShantoTune</span></div>
   </header>
 
-  <main>
-    <section id="earn">
-      <h2>Earn WLFI</h2>
-      <p>Follow our Telegram to get <strong>10 WLFI</strong></p>
-    </section>
+  <!-- Auth & Me page -->
+  <section id="auth">
+    <!-- Sign up -->
+    <div id="signupBox">
+      <input id="su-username" placeholder="User ID" />
+      <input id="su-password" type="password" placeholder="Password" />
+      <button id="signupBtn">Sign Up</button>
+    </div>
 
-    <section id="mine">
-      <h2>Mining</h2>
-      <p>Each WLFI = 0.01 cent</p>
-      <button id="start">Start Mining</button>
-      <div id="timer">00:00:00</div>
-    </section>
+    <!-- Login -->
+    <div id="loginBox">
+      <input id="li-username" placeholder="User ID" />
+      <input id="li-password" type="password" placeholder="Password" />
+      <button id="loginBtn">Login</button>
+    </div>
 
-    <section id="wallet">
-      <h2>Wallet</h2>
-      <p>Balance: <span id="balance">0</span> WLFI</p>
-      <label>Enter UID: <input id="uid" /></label>
-      <button id="withdraw">Withdraw</button>
-    </section>
-  </main>
+    <!-- Profile (after login) -->
+    <div id="profileBox" class="hidden">
+      <h2>Welcome, <span id="showUser"></span></h2>
+      <p>Balance: <span id="balance">0</span> WLFI ($<span id="usd">0.00</span>)</p>
+      <button id="openWithdraw">Withdraw</button>
+    </div>
+  </section>
+
+  <!-- Withdraw -->
+  <section id="withdrawBox" class="hidden">
+    <label><input type="radio" name="method" value="binance" checked> BINANCE UID</label>
+    <label><input type="radio" name="method" value="bitget"> BITGATE UID</label>
+    <input id="uidInput" placeholder="Paste your UID here" />
+    <button id="submitUid">Submit</button>
+    <p id="withdrawStatus"></p>
+  </section>
+
+  <!-- Bottom nav -->
+  <nav class="bottom-nav">
+    <button data-page="mine" class="active">Mine</button>
+    <button data-page="leader">Leaderboard</button>
+    <button data-page="upgrade">Upgrade</button>
+    <button data-page="team">Team</button>
+    <button data-page="me">Me</button>
+  </nav>
 
   <script src="script.js"></script>
 </body>
