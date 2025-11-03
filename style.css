@@ -37,3 +37,35 @@
 .btn:hover {
   background: #00cc55;
 }
+
+
+.mine-section {
+  background: #111;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+  text-align: center;
+}
+.mine-section h2 {
+  color: #00ff66;
+}
+#mine-timer {
+  color: #ccc;
+  margin: 10px 0;
+}
+.btn {
+  background: #00ff66;
+  color: #000;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #00cc55;
+}
+.success-msg {
+  color: #00ff99;
+  margin-top: 10px;
+}
