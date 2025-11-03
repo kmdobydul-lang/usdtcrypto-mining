@@ -1,197 +1,119 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>WLFI Mining — Live</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WLFI bot Website - GitHub Ready</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
-      <div class="brand">WLFI Live</div>
-      <div class="profile">7U • Level 0</div>
+    <!-- HEADER SECTION -->
+    <header id="header" class="section">
+        <div class="container">
+            <h1>🚀 Smart Demo Website</h1>
+            <p>Full Working Demo with Highlight + Invitation System</p>
+            <div class="command-badge">GitHub Pages Ready</div>
+        </div>
     </header>
 
-    <main class="content">
-      <!-- Mine Page -->
-      <section id="page-mine" class="page active">
-        <div class="card balance-card">
-          <div class="left">
-            <div class="coin-label">WLFI</div>
-            <div class="coin-amount" id="wlfiAmount">0.00</div>
-          </div>
-          <div class="right">
-            <div class="progress-bar"><div id="progressInner"></div></div>
-            <div class="progress-timer" id="progressTimer">—</div>
-          </div>
+    <!-- CONTROL PANEL -->
+    <section id="control-panel" class="section">
+        <div class="container">
+            <h2>🎮 Control Panel - Live Commands</h2>
+            <div class="command-grid">
+                <button class="cmd-btn" onclick="sendInvite()">
+                    📧 Send Demo Invite
+                </button>
+                <button class="cmd-btn" onclick="acceptInvite()">
+                    ✅ Accept Invitation
+                </button>
+                <button class="cmd-btn" onclick="highlightAll()">
+                    ✨ Highlight All Sections
+                </button>
+                <button class="cmd-btn" onclick="showAllInvites()">
+                    📋 View All Invites
+                </button>
+                <button class="cmd-btn" onclick="resetDemo()">
+                    🔄 Reset Demo
+                </button>
+                <button class="cmd-btn" onclick="smartDemo()">
+                    🤖 Auto Smart Demo
+                </button>
+            </div>
         </div>
+    </section>
 
-        <div class="card mine-card">
-          <h3>Mining Center</h3>
-          <p class="muted">Start mining — wait 24 hours — claim 5 WLFI.</p>
-
-          <div class="mine-controls">
-            <div id="mineStatus" class="mine-status">Not started</div>
-            <button id="mineActionBtn" class="btn primary">Start Mining</button>
-            <div id="mineMessage" class="muted" style="margin-top:8px"></div>
-          </div>
+    <!-- INVITATION SYSTEM -->
+    <section id="invitation-system" class="section">
+        <div class="container">
+            <h2>📨 Invitation System</h2>
+            <div class="invite-form">
+                <input type="email" id="emailInput" placeholder="Enter email address" class="input-field">
+                <select id="roleSelect" class="input-field">
+                    <option value="member">Member</option>
+                    <option value="admin">Admin</option>
+                    <option value="moderator">Moderator</option>
+                </select>
+                <button onclick="customInvite()" class="action-btn">Send Custom Invite</button>
+            </div>
+            <div id="invite-status" class="status-box">
+                <h3>📊 Live Status</h3>
+                <p>Total Invites: <span id="inviteCount">0</span></p>
+                <div id="inviteList" class="invite-list"></div>
+            </div>
         </div>
+    </section>
 
-        <div class="card tasks">
-          <h4>Tasks & Info</h4>
-          <ul>
-            <li>Daily Sign-in: +10 WLFI (demo)</li>
-            <li>Invite friends for bonuses (Team tab)</li>
-          </ul>
+    <!-- DEMO CONTENT SECTIONS -->
+    <section id="features" class="section">
+        <div class="container">
+            <h2>⭐ Website Features</h2>
+            <div class="features-grid">
+                <div class="feature-card" data-section="smart-highlight">
+                    <h3>Smart Highlight</h3>
+                    <p>Auto-highlight sections with smooth animations</p>
+                </div>
+                <div class="feature-card" data-section="invite-system">
+                    <h3>Invitation System</h3>
+                    <p>Full working invite system with tracking</p>
+                </div>
+                <div class="feature-card" data-section="responsive">
+                    <h3>Responsive Design</h3>
+                    <p>Works on all devices - mobile friendly</p>
+                </div>
+                <div class="feature-card" data-section="github-ready">
+                    <h3>GitHub Ready</h3>
+                    <p>Directly deploy to GitHub Pages</p>
+                </div>
+            </div>
         </div>
-      </section>
+    </section>
 
-      <!-- Team Page -->
-      <section id="page-team" class="page">
-        <div class="card">
-          <h3>Team & Invite</h3>
-          <p>Share your referral link and invite friends.</p>
-          <div class="invite-row">
-            <input id="refLink" readonly value="https://t.me/WLFIAAPP_Bot?start=ref_live" />
-            <button id="copyRefBtn" class="btn">Copy</button>
-          </div>
-          <div class="team-stats">
-            <div>Total team: <strong id="teamCount">0</strong></div>
-            <div>Promotion commission: <strong id="teamCommission">$0</strong></div>
-          </div>
-          <div style="margin-top:10px">
-            <button id="fakeInviteBtn" class="btn">Simulate Invite (+1)</button>
-            <p class="muted" style="margin-top:8px">(Use simulate for Live/testing)</p>
-          </div>
+    <!-- COMMAND CONSOLE -->
+    <section id="command-console" class="section">
+        <div class="container">
+            <h2>💻 Command Console</h2>
+            <div class="console">
+                <div id="console-output" class="console-output">
+                    <div class="console-line">🚀 System Ready - Type commands below</div>
+                    <div class="console-line">💡 Try: highlightAll() or sendInvite()</div>
+                </div>
+                <div class="console-input">
+                    <input type="text" id="command-input" placeholder="Type command here..." class="cmd-input">
+                    <button onclick="executeCommand()" class="cmd-execute">Execute</button>
+                </div>
+            </div>
         </div>
-      </section>
+    </section>
 
-      <!-- Me Page -->
-      <section id="page-me" class="page">
-        <div class="card">
-          <h3>Me</h3>
-          <div class="me-grid">
-            <div>WLFI: <strong id="meWLFI">0.00</strong></div>
-            <div>USDT: <strong id="meUSDT">0.00</strong></div>
-            <div>Mining speed: <strong>1.5 WLFI/H</strong></div>
-            <div>Working hours: <strong>24H</strong></div>
-          </div>
-
-          <div class="me-actions">
-            <button id="openConvert" class="btn">Convert WLFI → USDT</button>
-            <button id="openRecharge" class="btn">Recharge (USDT / BNB)</button>
-            <button id="openWithdraw" class="btn">Withdraw</button>
-          </div>
+    <!-- FOOTER -->
+    <footer id="footer" class="section">
+        <div class="container">
+            <p>© 2024 Smart Demo Website - Deployed on GitHub Pages</p>
+            <p class="footer-info">Built with HTML + CSS + JavaScript | Fully Functional</p>
         </div>
+    </footer>
 
-        <div class="card">
-          <h4>Account Settings</h4>
-          <ul class="settings-list">
-            <li>Invite</li>
-            <li>Login Password</li>
-            <li>Security Password</li>
-            <li>FAQ</li>
-            <li>About</li>
-            <li>Contact Customer Service</li>
-          </ul>
-        </div>
-      </section>
-    </main>
-
-    <!-- Bottom nav -->
-    <nav class="bottom-nav">
-      <button class="nav-btn active" data-target="page-mine">Mine</button>
-      <button class="nav-btn" data-target="page-team">Team</button>
-      <button class="nav-btn" data-target="page-me">Me</button>
-    </nav>
-  </div>
-
-  <!-- Convert Modal -->
-  <div id="modalConvert" class="modal hidden">
-    <div class="modal-card">
-      <h3>Convert WLFI to USDT</h3>
-      <p>Rate: <strong>1 WLFI = 0.01 USDT</strong></p>
-      <div class="row">
-        <input id="convertInput" type="number" min="1" placeholder="Enter WLFI amount" />
-        <button id="convertDo" class="btn">Convert</button>
-      </div>
-      <div id="convertResult" class="muted"></div>
-      <div class="row right"><button id="closeConvert" class="btn">Close</button></div>
-    </div>
-  </div>
-
-  <!-- Recharge Modal -->
-  <div id="modalRecharge" class="modal hidden">
-    <div class="modal-card">
-      <h3>Recharge (Deposit)</h3>
-      <p>Select coin</p>
-      <select id="rechargeSelect">
-        <option value="USDT">USDT (ERC20 / TRC20)</option>
-        <option value="BNB">BNB (BEP20)</option>
-      </select>
-      <div id="rechargeInfo" style="margin-top:10px" class="muted"></div>
-      <div class="row right"><button id="closeRecharge" class="btn">Close</button></div>
-    </div>
-  </div>
-
-  <!-- Withdraw Modal -->
-  <div id="modalWithdraw" class="modal hidden">
-    <div class="modal-card">
-      <h3>Withdraw Request</h3>
-      <p>Minimum withdrawal: <strong>2 USDT</strong></p>
-      <div class="row">
-        <label>Withdraw to</label>
-        <select id="withdrawMethod">
-          <option value="binance">Binance UID</option>
-          <option value="bitget">Bitget UID</option>
-        </select>
-      </div>
-      <div id="withdrawFields" class="row">
-        <input id="binanceInput" placeholder="Enter Binance UID" />
-        <input id="bitgetInput" placeholder="Enter Bitget UID" class="hidden" />
-        <input id="withdrawAmount" type="number" placeholder="Amount in USDT" min="2" />
-      </div>
-      <div id="withdrawMsg" class="muted"></div>
-      <div class="row">
-        <button id="submitWithdraw" class="btn">Submit</button>
-        <button id="closeWithdraw" class="btn">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
-</html> 
-
-<!-- bottom nav: replace or add these buttons -->
-<div class="bottom-nav">
-  <button class="nav-btn active">Mine</button>
-  <button class="nav-btn" id="taskBtn">Task</button>
-  <button class="nav-btn" id="adsBtn">Ads</button>
-  <button class="nav-btn">Team</button>
-  <button class="nav-btn">Me</button>
-</div>
-<!-- Task Modal -->
-<div id="taskModal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="closeTask">&times;</span>
-    <h2>🎯 Complete Tasks & Earn 10 WLFI</h2>
-    <p>1️⃣ Subscribe to our YouTube Channel:</p>
-    <a href="https://youtube.com/@shantotune?si=RWtGQZZtww34aIgB" target="_blank" class="link-btn">Subscribe YouTube</a>
-
-    <p>2️⃣ Join our Telegram Channel:</p>
-    <a href="https://t.me/free_ton74" target="_blank" class="link-btn">Join Telegram</a>
-
-    <button id="claimTaskBtn" class="claim-btn">✅ Claim 10 WLFI</button>
-  </div>
-</div>
-
-<!-- Ads Modal -->
-<div id="adsModal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="closeAds">&times;</span>
-    <h2>📢 Ads Section</h2>
-    <p>Coming Soon...</p>
-  </div>
-</div>
+</html>
