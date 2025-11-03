@@ -235,3 +235,38 @@ fakeInviteBtn.addEventListener('click', ()=>{
   // ensure UI elements exist
   renderAll();
 })();
+
+// --- Task & Ads modal logic (append to end of script.js) ---
+const taskBtn = document.getElementById("taskBtn");
+const adsBtn = document.getElementById("adsBtn");
+const taskModal = document.getElementById("taskModal");
+const adsModal = document.getElementById("adsModal");
+const closeTask = document.getElementById("closeTask");
+const closeAds = document.getElementById("closeAds");
+const claimTaskBtn = document.getElementById("claimTaskBtn");
+const balanceText = document.getElementById("balance");
+
+// ensure balance element exists
+if (!balanceText) {
+  console.warn('balance element not found (id="balance")');
+} 
+
+let balance = parseFloat(balanceText ? balanceText.innerText : 0) || 0;
+
+if (taskBtn) taskBtn.onclick = () => taskModal.style.display = "flex";
+if (adsBtn) adsBtn.onclick = () => adsModal.style.display = "flex";
+if (closeTask) closeTask.onclick = () => taskModal.style.display = "none";
+if (closeAds) closeAds.onclick = () => adsModal.style.display = "none";
+
+if (claimTaskBtn) claimTaskBtn.onclick = () => {
+  balance += 10;
+  if (balanceText) balanceText.innerText = balance.toFixed(2);
+  alert("✅ You earned 10 WLFI!");
+  taskModal.style.display = "none";
+};
+
+// close modal on outside click
+window.onclick = (e) => {
+  if (e.target === taskModal) taskModal.style.display = "none";
+  if (e.target === adsModal) adsModal.style.display = "none";
+};
