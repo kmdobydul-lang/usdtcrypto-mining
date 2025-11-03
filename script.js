@@ -270,3 +270,7 @@ window.onclick = (e) => {
   if (e.target === taskModal) taskModal.style.display = "none";
   if (e.target === adsModal) adsModal.style.display = "none";
 };
+// wrap to run after DOM ready
+document.addEventListener('DOMContentLoaded', function(){
+  // paste the task modal JS here (the block above)
+});
