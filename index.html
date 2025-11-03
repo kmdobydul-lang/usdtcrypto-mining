@@ -1,119 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WLFI bot Website - GitHub Ready</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WLFI Live Mining</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- HEADER SECTION -->
-    <header id="header" class="section">
-        <div class="container">
-            <h1>🚀 Smart Demo Website</h1>
-            <p>Full Working Demo with Highlight + Invitation System</p>
-            <div class="command-badge">GitHub Pages Ready</div>
-        </div>
-    </header>
+  <header>
+    <img src="logo.png" alt="WLFI Logo" width="50" />
+    <h1>WLFI Live Mining</h1>
+    <div>
+      <a href="https://t.me/free_ton74" target="_blank">Telegram</a> · 
+      <span>@ShantoTune (YouTube)</span>
+    </div>
+  </header>
 
-    <!-- CONTROL PANEL -->
-    <section id="control-panel" class="section">
-        <div class="container">
-            <h2>🎮 Control Panel - Live Commands</h2>
-            <div class="command-grid">
-                <button class="cmd-btn" onclick="sendInvite()">
-                    📧 Send Demo Invite
-                </button>
-                <button class="cmd-btn" onclick="acceptInvite()">
-                    ✅ Accept Invitation
-                </button>
-                <button class="cmd-btn" onclick="highlightAll()">
-                    ✨ Highlight All Sections
-                </button>
-                <button class="cmd-btn" onclick="showAllInvites()">
-                    📋 View All Invites
-                </button>
-                <button class="cmd-btn" onclick="resetDemo()">
-                    🔄 Reset Demo
-                </button>
-                <button class="cmd-btn" onclick="smartDemo()">
-                    🤖 Auto Smart Demo
-                </button>
-            </div>
-        </div>
+  <main>
+    <section id="earn">
+      <h2>Earn WLFI</h2>
+      <p>Follow our Telegram to get <strong>10 WLFI</strong></p>
     </section>
 
-    <!-- INVITATION SYSTEM -->
-    <section id="invitation-system" class="section">
-        <div class="container">
-            <h2>📨 Invitation System</h2>
-            <div class="invite-form">
-                <input type="email" id="emailInput" placeholder="Enter email address" class="input-field">
-                <select id="roleSelect" class="input-field">
-                    <option value="member">Member</option>
-                    <option value="admin">Admin</option>
-                    <option value="moderator">Moderator</option>
-                </select>
-                <button onclick="customInvite()" class="action-btn">Send Custom Invite</button>
-            </div>
-            <div id="invite-status" class="status-box">
-                <h3>📊 Live Status</h3>
-                <p>Total Invites: <span id="inviteCount">0</span></p>
-                <div id="inviteList" class="invite-list"></div>
-            </div>
-        </div>
+    <section id="mine">
+      <h2>Mining</h2>
+      <p>Each WLFI = 0.01 cent</p>
+      <button id="start">Start Mining</button>
+      <div id="timer">00:00:00</div>
     </section>
 
-    <!-- DEMO CONTENT SECTIONS -->
-    <section id="features" class="section">
-        <div class="container">
-            <h2>⭐ Website Features</h2>
-            <div class="features-grid">
-                <div class="feature-card" data-section="smart-highlight">
-                    <h3>Smart Highlight</h3>
-                    <p>Auto-highlight sections with smooth animations</p>
-                </div>
-                <div class="feature-card" data-section="invite-system">
-                    <h3>Invitation System</h3>
-                    <p>Full working invite system with tracking</p>
-                </div>
-                <div class="feature-card" data-section="responsive">
-                    <h3>Responsive Design</h3>
-                    <p>Works on all devices - mobile friendly</p>
-                </div>
-                <div class="feature-card" data-section="github-ready">
-                    <h3>GitHub Ready</h3>
-                    <p>Directly deploy to GitHub Pages</p>
-                </div>
-            </div>
-        </div>
+    <section id="wallet">
+      <h2>Wallet</h2>
+      <p>Balance: <span id="balance">0</span> WLFI</p>
+      <label>Enter UID: <input id="uid" /></label>
+      <button id="withdraw">Withdraw</button>
     </section>
+  </main>
 
-    <!-- COMMAND CONSOLE -->
-    <section id="command-console" class="section">
-        <div class="container">
-            <h2>💻 Command Console</h2>
-            <div class="console">
-                <div id="console-output" class="console-output">
-                    <div class="console-line">🚀 System Ready - Type commands below</div>
-                    <div class="console-line">💡 Try: highlightAll() or sendInvite()</div>
-                </div>
-                <div class="console-input">
-                    <input type="text" id="command-input" placeholder="Type command here..." class="cmd-input">
-                    <button onclick="executeCommand()" class="cmd-execute">Execute</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer id="footer" class="section">
-        <div class="container">
-            <p>© 2024 Smart Demo Website - Deployed on GitHub Pages</p>
-            <p class="footer-info">Built with HTML + CSS + JavaScript | Fully Functional</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
