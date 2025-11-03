@@ -1,52 +1,165 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>WLFI Demo</title><link rel="stylesheet" href="style.css"></head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WLFI Mining — Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 <body>
-<nav class="nav"><div class="brand">WLFI Demo</div></nav>
-<main class="wrap">
-<section class="card hero">
-  <div class="top"><div class="avatar">7U</div><div class="info"><div class="email">7Un@gmail.com</div><div class="level">Level 0 • 1.5 WLFI/H</div></div></div>
-  <div class="balance"><div class="coin">WLFI</div><div class="amount" id="wlfi">214.00</div></div>
-  <div class="progress"><div class="bar"><div id="barFill"></div></div><div class="timer" id="timer">23:59:48</div></div>
-  <div class="controls"><button id="mineBtn">Mine Now</button><button id="bonusBtn">Claim Bonus</button><button id="withdrawBtn">Withdraw</button></div>
-</section>
-<section class="card leaderboard"><h3>Holding Ranking</h3><ul id="leaders"><li><span>Bo S*****</span><strong>1,081,040.01</strong></li><li><span>ras*****</span><strong>870,622.69</strong></li><li><span>Cam*****</span><strong>831,144.01</strong></li></ul></section>
-<section class="card team" id="team"><h3>Team & Invite</h3><div class="invite"><input id="refLink" value="https://t.me/WLFIAAPP_Bot?start=ref_111378" readonly><button id="copyRef">Copy</button></div><div class="team-stats"><div>Total team: <strong id="teamCount">2</strong></div><div>Total commission: <strong id="teamCommission">$0</strong></div></div></section>
-<section class="card me" id="me"><h3>Me</h3><div class="wallets"><div>USDT: <strong id="usdt">0.00</strong></div><div>Working Hours: 24H</div><div>Mining Speed: 1.5 WLFI/H</div></div><div class="actions"><button id="recharge">Recharge</button><button id="withdraw2">Withdraw</button><button id="records">Records</button></div></section>
-</main>
-<footer class="foot"><small>Demo site — No real funds. For educational use only.</small></footer>
-<script src="script.js"></script>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">WLFI Demo</div>
+      <div class="profile">7U • Level 0</div>
+    </header>
+
+    <main class="content">
+      <!-- Mine Page -->
+      <section id="page-mine" class="page active">
+        <div class="card balance-card">
+          <div class="left">
+            <div class="coin-label">WLFI</div>
+            <div class="coin-amount" id="wlfiAmount">0.00</div>
+          </div>
+          <div class="right">
+            <div class="progress-bar"><div id="progressInner"></div></div>
+            <div class="progress-timer" id="progressTimer">—</div>
+          </div>
+        </div>
+
+        <div class="card mine-card">
+          <h3>Mining Center</h3>
+          <p class="muted">Start mining — wait 24 hours — claim 5 WLFI.</p>
+
+          <div class="mine-controls">
+            <div id="mineStatus" class="mine-status">Not started</div>
+            <button id="mineActionBtn" class="btn primary">Start Mining</button>
+            <div id="mineMessage" class="muted" style="margin-top:8px"></div>
+          </div>
+        </div>
+
+        <div class="card tasks">
+          <h4>Tasks & Info</h4>
+          <ul>
+            <li>Daily Sign-in: +10 WLFI (demo)</li>
+            <li>Invite friends for bonuses (Team tab)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Team Page -->
+      <section id="page-team" class="page">
+        <div class="card">
+          <h3>Team & Invite</h3>
+          <p>Share your referral link and invite friends.</p>
+          <div class="invite-row">
+            <input id="refLink" readonly value="https://t.me/WLFIAAPP_Bot?start=ref_demo" />
+            <button id="copyRefBtn" class="btn">Copy</button>
+          </div>
+          <div class="team-stats">
+            <div>Total team: <strong id="teamCount">0</strong></div>
+            <div>Promotion commission: <strong id="teamCommission">$0</strong></div>
+          </div>
+          <div style="margin-top:10px">
+            <button id="fakeInviteBtn" class="btn">Simulate Invite (+1)</button>
+            <p class="muted" style="margin-top:8px">(Use simulate for demo/testing)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Me Page -->
+      <section id="page-me" class="page">
+        <div class="card">
+          <h3>Me</h3>
+          <div class="me-grid">
+            <div>WLFI: <strong id="meWLFI">0.00</strong></div>
+            <div>USDT: <strong id="meUSDT">0.00</strong></div>
+            <div>Mining speed: <strong>1.5 WLFI/H</strong></div>
+            <div>Working hours: <strong>24H</strong></div>
+          </div>
+
+          <div class="me-actions">
+            <button id="openConvert" class="btn">Convert WLFI → USDT</button>
+            <button id="openRecharge" class="btn">Recharge (USDT / BNB)</button>
+            <button id="openWithdraw" class="btn">Withdraw</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h4>Account Settings</h4>
+          <ul class="settings-list">
+            <li>Invite</li>
+            <li>Login Password</li>
+            <li>Security Password</li>
+            <li>FAQ</li>
+            <li>About</li>
+            <li>Contact Customer Service</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom nav -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-target="page-mine">Mine</button>
+      <button class="nav-btn" data-target="page-team">Team</button>
+      <button class="nav-btn" data-target="page-me">Me</button>
+    </nav>
+  </div>
+
+  <!-- Convert Modal -->
+  <div id="modalConvert" class="modal hidden">
+    <div class="modal-card">
+      <h3>Convert WLFI to USDT</h3>
+      <p>Rate: <strong>1 WLFI = 0.01 USDT</strong></p>
+      <div class="row">
+        <input id="convertInput" type="number" min="1" placeholder="Enter WLFI amount" />
+        <button id="convertDo" class="btn">Convert</button>
+      </div>
+      <div id="convertResult" class="muted"></div>
+      <div class="row right"><button id="closeConvert" class="btn">Close</button></div>
+    </div>
+  </div>
+
+  <!-- Recharge Modal -->
+  <div id="modalRecharge" class="modal hidden">
+    <div class="modal-card">
+      <h3>Recharge (Deposit)</h3>
+      <p>Select coin</p>
+      <select id="rechargeSelect">
+        <option value="USDT">USDT (ERC20 / TRC20)</option>
+        <option value="BNB">BNB (BEP20)</option>
+      </select>
+      <div id="rechargeInfo" style="margin-top:10px" class="muted"></div>
+      <div class="row right"><button id="closeRecharge" class="btn">Close</button></div>
+    </div>
+  </div>
+
+  <!-- Withdraw Modal -->
+  <div id="modalWithdraw" class="modal hidden">
+    <div class="modal-card">
+      <h3>Withdraw Request</h3>
+      <p>Minimum withdrawal: <strong>2 USDT</strong></p>
+      <div class="row">
+        <label>Withdraw to</label>
+        <select id="withdrawMethod">
+          <option value="binance">Binance UID</option>
+          <option value="bitget">Bitget UID</option>
+        </select>
+      </div>
+      <div id="withdrawFields" class="row">
+        <input id="binanceInput" placeholder="Enter Binance UID" />
+        <input id="bitgetInput" placeholder="Enter Bitget UID" class="hidden" />
+        <input id="withdrawAmount" type="number" placeholder="Amount in USDT" min="2" />
+      </div>
+      <div id="withdrawMsg" class="muted"></div>
+      <div class="row">
+        <button id="submitWithdraw" class="btn">Submit</button>
+        <button id="closeWithdraw" class="btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
-<!-- Recharge & Withdraw Section -->
-<section class="wallet-section">
-  <h2>Recharge & Withdraw</h2>
-
-  <div class="wallet-item">
-    <h3>Recharge</h3>
-    <p>Supported networks:</p>
-    <ul>
-      <li>🔹 BNB: 0x53f90e7a0d2834b772890f4f456d51aaed61de43</li>
-      <li>🔹 USDT (TRC20 / ERC20)</li>
-    </ul>
-    <button class="btn">Recharge Now</button>
-  </div>
-
-  <div class="wallet-item">
-    <h3>Withdraw</h3>
-    <p>Withdraw available via:</p>
-    <ul>
-      <li>💰 Binance</li>
-      <li>💰 Bitget</li>
-    </ul>
-    <button class="btn">Withdraw Now</button>
-  </div>
-</section>
-<section class="mine-section">
-  <h2>Mining Center</h2>
-  <div id="mine-status">
-    <p id="mine-timer">Mining not started</p>
-    <button id="mine-btn" class="btn">Start Mining</button>
-  </div>
-  <p id="mine-result" class="success-msg"></p>
-</section>
